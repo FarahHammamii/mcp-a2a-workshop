@@ -1,0 +1,20 @@
+# Core
+groq
+python-dotenv>=1.0.0
+
+# MCP
+mcp>=1.0.0
+
+# Web servers for A2A
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+sse-starlette>=2.1.0
+httpx>=0.27.0
+
+# LangChain for tool handling
+langchain>=0.3.0
+langchain-mcp-adapters>=0.1.0
+
+# Utilities
+pydantic>=2.0.0
+aiofiles>=24.1.0
