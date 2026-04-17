@@ -20,5 +20,5 @@ pydantic>=2.0.0
 aiofiles>=24.1.0
 
 # Vertex AI for evaluation
-google-cloud-aiplatform>=1.60.0
+google-cloud-aiplatform[evaluation]
 pandas>=2.0.0
