@@ -13,7 +13,7 @@ from .base_agent import BaseA2AAgent
 
 # Optional Vertex AI evaluation
 try:
-    from ..evaluation import VertexAIEvaluator
+    from ..evaluation import ModelBasedEvaluator
     VERTEX_AI_AVAILABLE = True
 except ImportError:
     VERTEX_AI_AVAILABLE = False
@@ -47,7 +47,7 @@ class AnalysisAgent(BaseA2AAgent):
         self.evaluator = None
         if VERTEX_AI_AVAILABLE and os.getenv("GOOGLE_CLOUD_PROJECT"):
             try:
-                self.evaluator = VertexAIEvaluator()
+                self.evaluator = ModelBasedEvaluator()
                 print("✅ Analysis Agent: Vertex AI evaluation enabled")
             except Exception as e:
                 print(f"⚠️ Analysis Agent: Vertex AI evaluation not available: {e}")

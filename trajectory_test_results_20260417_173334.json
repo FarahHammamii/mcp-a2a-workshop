@@ -1,0 +1,98 @@
+{
+  "health_check": {
+    "Analysis Agent": {
+      "healthy": true,
+      "status": {
+        "status": "healthy",
+        "agent": "Weather Analysis Agent",
+        "agent_id": "weather-analysis-agent-32e5f2ec"
+      }
+    },
+    "Weather Agent": {
+      "healthy": true,
+      "status": {
+        "status": "healthy",
+        "agent": "Weather Data Agent",
+        "agent_id": "weather-data-agent-0a5acbdf"
+      }
+    }
+  },
+  "trajectory_tests": {
+    "test_1": {
+      "query": "What's the weather like in Tokyo?",
+      "success": true,
+      "response_length": 415,
+      "trajectory_steps": 1,
+      "validation": {
+        "has_analysis_call": true,
+        "has_weather_call": false,
+        "has_mcp_call": false,
+        "steps_chronological": true,
+        "complete_chain": false,
+        "intent_correct": true
+      },
+      "trajectory": [
+        {
+          "agent_name": "Weather Analysis Agent",
+          "action": "call_weather_agent",
+          "input": {
+            "intent": "get_weather_data_for_analysis",
+            "query": "What's the weather like in Tokyo?"
+          },
+          "timestamp": "2026-04-17T17:33:14.749551"
+        }
+      ]
+    },
+    "test_2": {
+      "query": "Is it a good day for a picnic in London?",
+      "success": true,
+      "response_length": 478,
+      "trajectory_steps": 1,
+      "validation": {
+        "has_analysis_call": true,
+        "has_weather_call": false,
+        "has_mcp_call": false,
+        "steps_chronological": true,
+        "complete_chain": false,
+        "intent_correct": true
+      },
+      "trajectory": [
+        {
+          "agent_name": "Weather Analysis Agent",
+          "action": "call_weather_agent",
+          "input": {
+            "intent": "get_weather_data_for_analysis",
+            "query": "Is it a good day for a picnic in London?"
+          },
+          "timestamp": "2026-04-17T17:33:23.427423"
+        }
+      ]
+    },
+    "test_3": {
+      "query": "What's the forecast for New York for the next 3 days?",
+      "success": true,
+      "response_length": 604,
+      "trajectory_steps": 1,
+      "validation": {
+        "has_analysis_call": true,
+        "has_weather_call": false,
+        "has_mcp_call": false,
+        "steps_chronological": true,
+        "complete_chain": false,
+        "intent_correct": true
+      },
+      "trajectory": [
+        {
+          "agent_name": "Weather Analysis Agent",
+          "action": "call_weather_agent",
+          "input": {
+            "intent": "get_weather_data_for_analysis",
+            "query": "What's the forecast for New York for the next 3 days?"
+          },
+          "timestamp": "2026-04-17T17:33:28.886534"
+        }
+      ]
+    }
+  },
+  "overall_success": false
+}
