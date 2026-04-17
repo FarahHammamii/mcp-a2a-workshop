@@ -11,6 +11,13 @@ from dotenv import load_dotenv
 from groq import Groq
 from .base_agent import BaseA2AAgent
 
+# Optional Vertex AI evaluation
+try:
+    from ..evaluation import VertexAIEvaluator
+    VERTEX_AI_AVAILABLE = True
+except ImportError:
+    VERTEX_AI_AVAILABLE = False
+
 load_dotenv()
 
 
@@ -35,6 +42,17 @@ class AnalysisAgent(BaseA2AAgent):
         # Weather agent A2A endpoint
         self.weather_agent_url = weather_agent_url
         self.http_client = httpx.AsyncClient(timeout=30.0)
+        
+        # Optional Vertex AI evaluator
+        self.evaluator = None
+        if VERTEX_AI_AVAILABLE and os.getenv("GOOGLE_CLOUD_PROJECT"):
+            try:
+                self.evaluator = VertexAIEvaluator()
+                print("✅ Analysis Agent: Vertex AI evaluation enabled")
+            except Exception as e:
+                print(f"⚠️ Analysis Agent: Vertex AI evaluation not available: {e}")
+        else:
+            print("ℹ️ Analysis Agent: Vertex AI evaluation not configured")
     
     def get_capabilities(self) -> Dict[str, Any]:
         return {
@@ -103,6 +121,24 @@ Keep it concise and friendly.
         
         # Then analyze the data with Groq
         analysis = await self._analyze_with_groq(message, weather_data)
+        
+        # Optional: Evaluate the response with Vertex AI
+        if self.evaluator:
+            try:
+                eval_result = await self.evaluator.evaluate_response(
+                    prompt=message,
+                    response=analysis,
+                    context=weather_data
+                )
+                if eval_result["success"]:
+                    scores = eval_result["scores"]
+                    print(f"📊 Response Evaluation Scores:")
+                    for metric, score in scores.items():
+                        print(f"   {metric}: {score:.2f}")
+                else:
+                    print(f"⚠️ Evaluation failed: {eval_result['error']}")
+            except Exception as e:
+                print(f"⚠️ Evaluation error: {e}")
         
         return analysis
     
